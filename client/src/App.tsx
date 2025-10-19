@@ -1,12 +1,15 @@
+import Home from "./pages/Home.tsx";
 import Lobby from "./pages/Lobby.tsx";
+import { Routes, Route } from "react-router-dom";
 
-import "./App.css";
+import "./css/App.css";
 
 function App() {
   return (
-    <>
-      <Lobby />
-    </>
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/lobby" element={<Lobby/>}/>
+    </Routes>
   );
 }
 

@@ -5,9 +5,9 @@ export default function registerSocketHandlers(io: Server): void {
   io.on("connect", (socket) => {
     console.log(`socket ${socket.id} just connected`);
 
-    handleLobbyEvents(io);
+    handleLobbyEvents(io, socket);
 
-    io.on("diconnect", (socket) => {
+    socket.on("diconnect", (socket) => {
       console.log(`socket ${socket.id} just disconnected`);
     });
   });

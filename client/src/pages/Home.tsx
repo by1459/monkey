@@ -19,19 +19,30 @@ export default function Home() {
   const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Connected to server with ID:', socket.id);
+    socket.on("connect", () => {
+      console.log("Connected to server with ID:", socket.id);
+    });
+
+    socket.on("lobbyCheck", ({ exists, lobbyName }) => {
+      console.log(exists, lobbyName);
+      if (exists) {
+        console.log("joining lobby")
+        socket.emit("joinLobby", lobbyName, username);
+      } else {
+        console.log("creating lobby")
+        socket.emit("createLobby", lobbyName, username);
+      }
     });
 
     return () => {
-      socket.off('connect');
+      socket.off("connect");
+      socket.off("lobbyCheck");
     };
-  }, []);
+  }, [username]);
 
   const handleJoin = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(lobby);
-    console.log(username);
+    socket.emit("checkLobby", lobby);
     navigate(`/lobby/${lobby}`, {
       state: { username } as LobbyState,
     } as NavigateOptions);

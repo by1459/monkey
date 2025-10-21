@@ -22,7 +22,13 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Backend Packages */
+    "paths": { 
+      "@backend/*": ["../server/src/*"],
+      "@/*": ["../shared/src/*"]
+    }
   },
   "include": ["src"]
 }

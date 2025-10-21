@@ -1,10 +1,7 @@
 import { Socket, Server } from "socket.io";
+import { type Player } from "@/types";
 
-interface Lobby {
-  players: string[];
-}
-
-const lobbies = new Map<string, Lobby>();
+const lobbies = new Map<string, Player[]>();
 
 export default function handleLobbyEvents(io: Server, socket: Socket) {
   socket.on("checkLobby", (lobbyName: string) => {
@@ -18,7 +15,7 @@ export default function handleLobbyEvents(io: Server, socket: Socket) {
     const lobby = lobbies.get(lobbyName);
     console.log("this should be called the second tiem");
     if (lobby) {
-      lobby.players.push(playerName);
+      lobby.push({ id: socket.id, name: playerName });
       socket.join(lobbyName);
       io.to(lobbyName).emit("playerJoined", playerName);
     }
@@ -28,9 +25,12 @@ export default function handleLobbyEvents(io: Server, socket: Socket) {
     const lobby = lobbies.get(lobbyName);
     console.log(lobby);
     if (!lobby) {
-      lobbies.set(lobbyName, {
-        players: [playerName],
-      });
+      lobbies.set(lobbyName, [
+        {
+          id: socket.id,
+          name: playerName,
+        },
+      ]);
       socket.join(lobbyName);
       io.emit("lobbyCreated", { lobbyName, playerName });
     }

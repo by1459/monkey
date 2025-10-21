@@ -1,0 +1,13 @@
+{
+  "name": "@monkey/shared",
+  "version": "1.0.0",
+  "description": "Shared types for Monkey game",
+  "main": "src/types.ts",
+  "types": "src/types.ts",
+  "type": "module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+

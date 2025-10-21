@@ -1,5 +1,3 @@
-import { io, Socket } from "socket.io-client";
-import { type DataType, getData } from "../services/api.ts";
 import { useEffect, useState } from "react";
 import { type FormEvent } from "react";
 import {
@@ -8,10 +6,7 @@ import {
   type NavigateOptions,
 } from "react-router-dom";
 import { socket } from "../socket.ts";
-
-export interface LobbyState {
-  username: string;
-}
+import { type Player, type LobbyState } from "@/types";
 
 export default function Home() {
   const [lobby, setLobby] = useState("");
@@ -26,10 +21,8 @@ export default function Home() {
     socket.on("lobbyCheck", ({ exists, lobbyName }) => {
       console.log(exists, lobbyName);
       if (exists) {
-        console.log("joining lobby")
         socket.emit("joinLobby", lobbyName, username);
       } else {
-        console.log("creating lobby")
         socket.emit("createLobby", lobbyName, username);
       }
     });
@@ -44,7 +37,15 @@ export default function Home() {
     e.preventDefault();
     socket.emit("checkLobby", lobby);
     navigate(`/lobby/${lobby}`, {
-      state: { username } as LobbyState,
+      state: {
+        players: [
+          {
+            id: socket.id,
+            name: username,
+          },
+        ],
+        lobbyName: lobby,
+      } as LobbyState,
     } as NavigateOptions);
   };
 

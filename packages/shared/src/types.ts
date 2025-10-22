@@ -1,11 +1,11 @@
 export interface Player {
   id: string,
   name: string,
+  ready: boolean,
 }
 
-export interface LobbyState {
-  lobbyName: string;
-  players: Player[];
+export interface Lobby {
+  players: Player[]
 }
 
 

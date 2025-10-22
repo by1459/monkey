@@ -6,10 +6,9 @@ import {
   type NavigateOptions,
 } from "react-router-dom";
 import { socket } from "../socket.ts";
-import { type Player, type LobbyState } from "@/types";
 
 export default function Home() {
-  const [lobby, setLobby] = useState("");
+  const [lobbyName, setLobbyName] = useState("");
   const [username, setUsermame] = useState("");
   const navigate: NavigateFunction = useNavigate();
 
@@ -18,35 +17,23 @@ export default function Home() {
       console.log("Connected to server with ID:", socket.id);
     });
 
-    socket.on("lobbyCheck", ({ exists, lobbyName }) => {
-      console.log(exists, lobbyName);
-      if (exists) {
-        socket.emit("joinLobby", lobbyName, username);
-      } else {
-        socket.emit("createLobby", lobbyName, username);
-      }
+    socket.on("playerJoined", (lobby) => {
+      navigate(`/lobby/${lobbyName}`, {
+        state: {
+          lobby,
+        },
+      } as NavigateOptions);
     });
 
     return () => {
       socket.off("connect");
-      socket.off("lobbyCheck");
+      socket.off("playerJoined");
     };
   }, [username]);
 
   const handleJoin = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    socket.emit("checkLobby", lobby);
-    navigate(`/lobby/${lobby}`, {
-      state: {
-        players: [
-          {
-            id: socket.id,
-            name: username,
-          },
-        ],
-        lobbyName: lobby,
-      } as LobbyState,
-    } as NavigateOptions);
+    socket.emit("joinLobby", lobbyName, username);
   };
 
   return (
@@ -56,8 +43,8 @@ export default function Home() {
         <p>Lobby Name</p>
         <input
           className="lobby-name"
-          value={lobby}
-          onChange={(e) => setLobby(e.target.value)}
+          value={lobbyName}
+          onChange={(e) => setLobbyName(e.target.value)}
         />
         <p>Username</p>
         <input

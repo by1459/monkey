@@ -1,0 +1,15 @@
+{
+  "name": "monkey",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "install:all": "npm install --prefix packages/shared && npm install --prefix packages/client && npm install --prefix packages/server",
+    "build:client": "cd packages/client && npm run build",
+    "dev:client": "cd packages/client && npm run dev",
+    "dev:server": "cd packages/server && npm run dev"
+  }
+}
+

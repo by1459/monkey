@@ -1,4 +1,4 @@
-import type { Player } from "@/types";
+import type { Player } from "../types";
 
 export default function Player({ player }: { player: Player }) {
     return (

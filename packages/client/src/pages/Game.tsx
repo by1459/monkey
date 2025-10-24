@@ -1,4 +1,4 @@
-import type { Lobby } from "@/types";
+import type { Lobby } from "../types";
 import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Player from "../components/player";

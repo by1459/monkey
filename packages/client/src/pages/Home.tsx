@@ -6,6 +6,7 @@ import {
   type NavigateOptions,
 } from "react-router-dom";
 import { socket } from "../socket.ts";
+import "../css/Home.css";
 
 export default function Home() {
   const [lobbyName, setLobbyName] = useState("");
@@ -53,7 +54,12 @@ export default function Home() {
           onChange={(e) => setUsermame(e.target.value)}
         />
         <br />
-        <button className="join-lobby">Join</button>
+        <button 
+          className="join-lobby"
+          disabled={!lobbyName || !username}
+        >
+          Join
+        </button>
       </form>
     </div>
   );

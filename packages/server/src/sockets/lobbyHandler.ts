@@ -19,7 +19,7 @@ export default function handleLobbyEvents(io: Server, socket: Socket) {
   }
 
   const removePlayerFromLobby = (lobbyName: string, playerId: string) => {
-    console.log(`Player ${playerId} disconnected`);
+    console.log(`Player ${playerId} disconnected from ${lobbyName}`);
     const lobby = lobbies.get(lobbyName);
     if (lobby) {
       const playerIndex = lobby.players.findIndex(
@@ -27,9 +27,12 @@ export default function handleLobbyEvents(io: Server, socket: Socket) {
       );
       if (playerIndex !== -1) {
         lobby.players.splice(playerIndex, 1);
+        console.log(`Remaining players in ${lobbyName}: ${lobby.players.length}`);
         io.to(lobbyName).emit("playerDisconnected", lobby);
         if (lobby.players.length === 0) {
           lobbies.delete(lobbyName);
+          console.log(`✅ Lobby "${lobbyName}" destroyed (no players remaining)`);
+          console.log(`📊 Total active lobbies: ${lobbies.size}`);
         }
       }
     }

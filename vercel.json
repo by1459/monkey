@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd packages/client && npm install && npm run build",
+  "outputDirectory": "packages/client/dist",
+  "installCommand": "npm install --prefix packages/shared && npm install --prefix packages/client",
+  "devCommand": "cd packages/client && npm run dev",
+  "framework": null
+}
+

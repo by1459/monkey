@@ -1,0 +1,87 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.all-players {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(100, 108, 255, 0.1);
+  min-width: 150px;
+}
+
+.player img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.player h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.hidden-card {
+  min-height: 240px;
+  justify-content: center;
+}
+
+.hidden-card button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.play-again-status {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #646cff;
+}
+
+.play-again-button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+}
+
+.play-again-button:hover:not(:disabled) {
+  background-color: #535bf2;
+}
+
+.play-again-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #888;
+}
+
+.play-again-button.ready {
+  background-color: #4caf50;
+}

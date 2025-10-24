@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate, type NavigateFunction, type NavigateOptions } from "react-router-dom";
 import { type Lobby, type Player } from "@/types";
 
 export default function Lobby() {
-  
+  const { lobbyName } = useParams();
   const [ready, setReady] = useState<boolean>(false);
   const [players, setPlayers] = useState<Player[]>([]);
-  const { lobbyName } = useParams();
   const location = useLocation();
   const lobbyState: Lobby = location.state?.lobby as Lobby;
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     setPlayers(lobbyState.players);
@@ -26,8 +26,13 @@ export default function Lobby() {
       setPlayers(lobby.players);
     });
 
-    socket.on("startGame", () => {
+    socket.on("startGame", (lobby: Lobby) => {
       console.log("Starting game");
+      navigate(`/game/${lobbyName}`, {
+        state: {
+          lobby,
+        },
+      } as NavigateOptions);
     });
 
     return () => {
@@ -44,8 +49,15 @@ export default function Lobby() {
     console.log("Ready state changed to", newReady);
     socket.emit("ready", lobbyName, newReady);
   }
+
+  const leaveLobby = () => {
+    socket.emit("leaveLobby", lobbyName);
+    navigate("/");
+  }
+
   return (
     <div className="lobby">
+      <button className="leave-lobby" onClick={leaveLobby}>Leave Lobby</button>
       <h2>{lobbyName}</h2>
       <ul className="player-list">
         {players.map((player) => {

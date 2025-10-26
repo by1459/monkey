@@ -54,3 +54,4 @@ export const DECK: Card[] = [
     { name: "SPADE-12-QUEEN", value: 12, image: "SPADE-12-QUEEN.svg" },
     { name: "SPADE-13-KING", value: 13, image: "SPADE-13-KING.svg" },
 ];
+

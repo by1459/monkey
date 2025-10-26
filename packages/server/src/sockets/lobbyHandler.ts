@@ -1,5 +1,5 @@
 import { Socket, Server } from "socket.io";
-import { type Player, type Lobby } from "@/types";
+import { type Player, type Lobby } from "../types";
 import { DECK } from "../constants/deck";
 
 const lobbies = new Map<string, Lobby>();

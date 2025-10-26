@@ -26,8 +26,7 @@
 
     /* Backend Packages */
     "paths": { 
-      "@backend/*": ["../server/src/*"],
-      "@/*": ["../shared/src/*"]
+      "@backend/*": ["../server/src/*"]
     }
   },
   "include": ["src"]

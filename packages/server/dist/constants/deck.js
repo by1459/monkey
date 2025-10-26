@@ -1,6 +1,7 @@
-import type { Card } from "../types";
-
-export const DECK: Card[] = [
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DECK = void 0;
+exports.DECK = [
     { name: "HEART-1", value: 1, image: "HEART-1.svg" },
     { name: "HEART-2", value: 2, image: "HEART-2.svg" },
     { name: "HEART-3", value: 3, image: "HEART-3.svg" },

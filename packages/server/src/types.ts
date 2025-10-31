@@ -10,6 +10,8 @@ export interface Player {
   ready: boolean,
   playAgainReady: boolean,
   card: Card | null,
+  input1: string,
+  input2: string,
 }
 
 export interface Lobby {

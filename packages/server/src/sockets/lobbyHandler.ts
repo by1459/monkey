@@ -41,10 +41,10 @@ export default function handleLobbyEvents(io: Server, socket: Socket) {
   socket.on("joinLobby", (lobbyName: string, playerName: string) => {
     const lobby = lobbies.get(lobbyName);
     if (lobby) {
-      lobby.players.push({ id: socket.id, name: playerName, ready: false, playAgainReady: false, card: null } as Player);
+      lobby.players.push({ id: socket.id, name: playerName, ready: false, playAgainReady: false, card: null, input1: "", input2: "" } as Player);
     } else {
       lobbies.set(lobbyName, {
-        players: [{ id: socket.id, name: playerName, ready: false, playAgainReady: false, card: null } as Player],
+        players: [{ id: socket.id, name: playerName, ready: false, playAgainReady: false, card: null, input1: "", input2: "" } as Player],
         deck: null,
       });
     }
@@ -85,9 +85,26 @@ export default function handleLobbyEvents(io: Server, socket: Socket) {
           // Set all players to ready for the game
           lobby.players.forEach((player) => {
             player.ready = true;
+            player.input1 = "";
+            player.input2 = "";
           });
           checkReady(lobbyName);
         }
+      }
+    }
+  });
+
+  socket.on("updatePlayerInput", ({ lobbyName, inputNumber, value }: { lobbyName: string, inputNumber: 1 | 2, value: string }) => {
+    const lobby = lobbies.get(lobbyName);
+    if (lobby) {
+      const player = lobby.players.find((player) => player.id === socket.id);
+      if (player) {
+        if (inputNumber === 1) {
+          player.input1 = value;
+        } else if (inputNumber === 2) {
+          player.input2 = value;
+        }
+        io.to(lobbyName).emit("playerInputUpdate", lobby.players);
       }
     }
   });
